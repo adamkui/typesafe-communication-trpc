@@ -1,24 +1,28 @@
-import { trpc } from "./utils/trpc";
+import { trpc } from "./trpc";
 
 function App() {
-  const user = trpc.user.getUser.useQuery();
-  const hello = trpc.user.greetUser.useQuery({ name: user.data?.name ?? "" });
-  const mutation = trpc.message.saveMessage.useMutation();
+  const userQuery = trpc.user.getUserById.useQuery({ id: "12345" });
+  const createPostMutation = trpc.post.createPost.useMutation();
 
-  const sendMessage = () => {
-    mutation.mutate({ message: "Ez egy próba" });
+  const createPost = () => {
+    createPostMutation.mutate({
+      author: "Teszt Elek",
+      content: "Lorem ipsum",
+      id: "12345",
+      title: "Teszt bejegyzés",
+    });
   };
 
-  if (hello.isLoading) return <p>Betöltés...</p>;
+  if (userQuery.isLoading) return <p>{"Betöltés..."}</p>;
 
-  if (mutation.isSuccess) {
-    console.log(mutation.data.message);
+  if (createPostMutation.isSuccess) {
+    alert(createPostMutation.data.message);
   }
 
   return (
     <>
-      <h1>{hello.data?.message}</h1>
-      <button onClick={sendMessage}>Üzenet küldése</button>
+      <h1>{`Hello, ${userQuery.data?.name}!`}</h1>
+      <button onClick={createPost}>{`Bejegyzés létrehozása`}</button>
     </>
   );
 }

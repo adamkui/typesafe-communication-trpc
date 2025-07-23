@@ -1,7 +1,18 @@
 import { appRouter } from "@trpc/index";
+import { AppContext } from "@trpc/schemas";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import cors from "cors";
 import express from "express";
+
+import { postsService } from "./services/posts.service";
+import { usersService } from "./services/users.service";
+
+export const createAppContext = (): AppContext => {
+  return {
+    usersService,
+    postsService,
+  };
+};
 
 const app = express();
 
@@ -11,7 +22,7 @@ app.use(
   "/trpc",
   createExpressMiddleware({
     router: appRouter,
-    createContext: () => ({}),
+    createContext: () => createAppContext(),
   })
 );
 

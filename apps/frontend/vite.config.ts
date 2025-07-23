@@ -8,6 +8,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "@trpc/index": path.resolve(__dirname, "../../packages/trpc/src"),
+      "@schemas/index": path.resolve(__dirname, "../../packages/schemas/index"),
+      models: path.resolve(__dirname, "../../packages/models"),
     },
   },
 });

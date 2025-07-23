@@ -4,7 +4,7 @@ import type { AppRouter } from "@trpc/index";
 import ReactDOM from "react-dom/client";
 
 import App from "./App";
-import { trpc } from "./utils/trpc";
+import { trpc } from "./trpc";
 
 const client = new QueryClient();
 
